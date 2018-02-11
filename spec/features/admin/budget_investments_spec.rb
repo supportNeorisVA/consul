@@ -221,13 +221,13 @@ feature 'Admin budget investments' do
       health_group = create(:valuator_group, name: "Health")
       culture_group = create(:valuator_group, name: "Culture")
 
-      budget_investment1 = create(:budget_investment, title: "Build a hospital", budget: budget)
+      budget_investment1 = create(:budget_investment, title: "Build a hospital", budget: @budget)
       budget_investment1.valuator_groups << health_group
 
-      budget_investment2 = create(:budget_investment, title: "Build a theatre", budget: budget)
+      budget_investment2 = create(:budget_investment, title: "Build a theatre", budget: @budget)
       budget_investment2.valuator_groups << culture_group
 
-      visit admin_budget_budget_investments_path(budget_id: budget.id)
+      visit admin_budget_budget_investments_path(budget_id: @budget.id)
       expect(page).to have_link("Build a hospital")
       expect(page).to have_link("Build a theatre")
 
