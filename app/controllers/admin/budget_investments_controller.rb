@@ -7,11 +7,14 @@ class Admin::BudgetInvestmentsController < Admin::BaseController
   has_orders %w{oldest}, only: [:show, :edit]
   has_filters(%w{all without_admin without_valuator under_valuation
                  valuation_finished winners},
-              only: [:index, :toggle_selection])
+                 only: [:index, :toggle_selection])
+
+  has_orders %w{oldest}, only: [:show, :edit]
 
   before_action :load_budget
   before_action :load_investment, only: [:show, :edit, :update, :toggle_selection]
   before_action :load_ballot, only: [:show, :index]
+  before_action :parse_valuation_filters
   before_action :load_investments, only: [:index, :toggle_selection]
 
   def index
@@ -129,6 +132,18 @@ class Admin::BudgetInvestmentsController < Admin::BaseController
     def set_valuation_tags
       @investment.set_tag_list_on(:valuation, budget_investment_params[:valuation_tag_list])
       params[:budget_investment] = params[:budget_investment].except(:valuation_tag_list)
+    end
+
+    def parse_valuation_filters
+      if params[:valuator_or_group_id]
+        model, id = params[:valuator_or_group_id].split("_")
+
+        if model == "group"
+          params[:valuator_group_id] = id
+        else
+          params[:valuator_id] = id
+        end
+      end
     end
 
 end
