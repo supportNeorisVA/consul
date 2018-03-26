@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220211105) do
+ActiveRecord::Schema.define(version: 20180320104823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "unaccent"
   enable_extension "pg_trgm"
+  enable_extension "unaccent"
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
@@ -101,8 +101,9 @@ ActiveRecord::Schema.define(version: 20180220211105) do
 
   create_table "budget_groups", force: :cascade do |t|
     t.integer "budget_id"
-    t.string  "name",      limit: 50
+    t.string  "name",                 limit: 50
     t.string  "slug"
+    t.integer "max_votable_headings",            default: 1
   end
 
   add_index "budget_groups", ["budget_id"], name: "index_budget_groups_on_budget_id", using: :btree
@@ -136,7 +137,6 @@ ActiveRecord::Schema.define(version: 20180220211105) do
     t.string   "feasibility",                limit: 15, default: "undecided"
     t.text     "price_explanation"
     t.text     "unfeasibility_explanation"
-    t.text     "internal_comments"
     t.boolean  "valuation_finished",                    default: false
     t.integer  "valuator_assignments_count",            default: 0
     t.integer  "price_first_year",           limit: 8
@@ -640,6 +640,7 @@ ActiveRecord::Schema.define(version: 20180220211105) do
     t.string   "notifiable_type"
     t.integer  "counter",         default: 1
     t.datetime "emailed_at"
+    t.datetime "read_at"
   end
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
