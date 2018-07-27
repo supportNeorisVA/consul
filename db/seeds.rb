@@ -124,4 +124,13 @@ Setting['map_zoom'] = 10
 # Related content
 Setting['related_content_score_threshold'] = -0.3
 
+<<<<<<< HEAD
 Setting["feature.user.skip_verification"] = nil
+=======
+Setting["feature.user.skip_verification"] = 'true'
+
+Setting['feature.homepage.widgets.feeds.proposals'] = true
+Setting['feature.homepage.widgets.feeds.debates'] = true
+Setting['feature.homepage.widgets.feeds.processes'] = true
+
+>>>>>>> upstream/master
